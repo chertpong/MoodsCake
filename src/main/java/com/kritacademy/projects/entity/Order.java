@@ -12,6 +12,7 @@ import java.util.List;
  */
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Table(name = "orders")
 public class Order implements Serializable {
     @Id
     Long id;
