@@ -2,6 +2,7 @@ package com.kritacademy.projects.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -15,8 +16,13 @@ import java.util.List;
 @Table(name = "orders")
 public class Order implements Serializable {
     @Id
+    @GeneratedValue(strategy = GenerationType.TABLE)
     Long id;
+    @NotNull(message = "errors.name.notnull")
+    @Size(min = 2,max = 100,message = "errors.name.size")
     String name;
+    @NotNull(message = "errors.phone.notnull")
+    @Size(min = 8,max = 12,message = "error.phone.size")
     String phoneNumber;
     String allergic;
     String specialNeed;
@@ -34,8 +40,7 @@ public class Order implements Serializable {
     public Order() {
     }
 
-    public Order(Long id, String name, String phoneNumber, String allergic, String specialNeed, Date pickupDate, Cake cake, Double size, List<Topping> topping, OrderStatus status) {
-        this.id = id;
+    public Order(String name, String phoneNumber, String allergic, String specialNeed, Date pickupDate, Cake cake, Double size, List<Topping> topping, OrderStatus status) {
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.allergic = allergic;
@@ -136,16 +141,17 @@ public class Order implements Serializable {
 
         if (getId() != null ? !getId().equals(order.getId()) : order.getId() != null) return false;
         if (getName() != null ? !getName().equals(order.getName()) : order.getName() != null) return false;
-        if (!getPhoneNumber().equals(order.getPhoneNumber())) return false;
+        if (getPhoneNumber() != null ? !getPhoneNumber().equals(order.getPhoneNumber()) : order.getPhoneNumber() != null)
+            return false;
         if (getAllergic() != null ? !getAllergic().equals(order.getAllergic()) : order.getAllergic() != null)
             return false;
         if (getSpecialNeed() != null ? !getSpecialNeed().equals(order.getSpecialNeed()) : order.getSpecialNeed() != null)
             return false;
         if (getPickupDate() != null ? !getPickupDate().equals(order.getPickupDate()) : order.getPickupDate() != null)
             return false;
-        if (!getCake().equals(order.getCake())) return false;
+        if (getCake() != null ? !getCake().equals(order.getCake()) : order.getCake() != null) return false;
         if (getSize() != null ? !getSize().equals(order.getSize()) : order.getSize() != null) return false;
-        if (getTopping() != order.getTopping()) return false;
+        if (getTopping() != null ? !getTopping().equals(order.getTopping()) : order.getTopping() != null) return false;
         return getStatus() == order.getStatus();
 
     }
@@ -154,11 +160,11 @@ public class Order implements Serializable {
     public int hashCode() {
         int result = getId() != null ? getId().hashCode() : 0;
         result = 31 * result + (getName() != null ? getName().hashCode() : 0);
-        result = 31 * result + getPhoneNumber().hashCode();
+        result = 31 * result + (getPhoneNumber() != null ? getPhoneNumber().hashCode() : 0);
         result = 31 * result + (getAllergic() != null ? getAllergic().hashCode() : 0);
         result = 31 * result + (getSpecialNeed() != null ? getSpecialNeed().hashCode() : 0);
         result = 31 * result + (getPickupDate() != null ? getPickupDate().hashCode() : 0);
-        result = 31 * result + getCake().hashCode();
+        result = 31 * result + (getCake() != null ? getCake().hashCode() : 0);
         result = 31 * result + (getSize() != null ? getSize().hashCode() : 0);
         result = 31 * result + (getTopping() != null ? getTopping().hashCode() : 0);
         result = 31 * result + (getStatus() != null ? getStatus().hashCode() : 0);

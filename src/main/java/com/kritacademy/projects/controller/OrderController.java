@@ -3,6 +3,7 @@ package com.kritacademy.projects.controller;
 import com.kritacademy.projects.entity.Order;
 import com.kritacademy.projects.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,7 +25,7 @@ public class OrderController {
         return orderService.getById(id);
     }
     @RequestMapping(value = "/orders", method = RequestMethod.POST)
-    public Order addOrder(@RequestBody Order order){
+    public Order addOrder(@Validated @RequestBody Order order){
         return orderService.addOrder(order);
     }
     @RequestMapping(value = "/orders/", method = RequestMethod.PUT)

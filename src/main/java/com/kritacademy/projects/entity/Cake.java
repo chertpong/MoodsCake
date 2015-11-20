@@ -14,9 +14,12 @@ import java.util.Set;
 @Entity
 public class Cake implements Serializable {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
     @NotNull
     String name;
+    @NotNull
+    Double price;
     String description;
     @ElementCollection
     @Enumerated(EnumType.STRING)
@@ -28,9 +31,9 @@ public class Cake implements Serializable {
     public Cake() {
     }
 
-    public Cake(Long id, String name, String description, Set<Topping> availableTopping, List<Double> availableSize, String profilePicture) {
-        this.id = id;
+    public Cake(String name, Double price, String description, Set<Topping> availableTopping, List<Double> availableSize, String profilePicture) {
         this.name = name;
+        this.price = price;
         this.description = description;
         this.availableTopping = availableTopping;
         this.availableSize = availableSize;
@@ -85,6 +88,14 @@ public class Cake implements Serializable {
         this.profilePicture = profilePicture;
     }
 
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -94,6 +105,7 @@ public class Cake implements Serializable {
 
         if (getId() != null ? !getId().equals(cake.getId()) : cake.getId() != null) return false;
         if (getName() != null ? !getName().equals(cake.getName()) : cake.getName() != null) return false;
+        if (getPrice() != null ? !getPrice().equals(cake.getPrice()) : cake.getPrice() != null) return false;
         if (getDescription() != null ? !getDescription().equals(cake.getDescription()) : cake.getDescription() != null)
             return false;
         if (getAvailableTopping() != null ? !getAvailableTopping().equals(cake.getAvailableTopping()) : cake.getAvailableTopping() != null)
@@ -108,6 +120,7 @@ public class Cake implements Serializable {
     public int hashCode() {
         int result = getId() != null ? getId().hashCode() : 0;
         result = 31 * result + (getName() != null ? getName().hashCode() : 0);
+        result = 31 * result + (getPrice() != null ? getPrice().hashCode() : 0);
         result = 31 * result + (getDescription() != null ? getDescription().hashCode() : 0);
         result = 31 * result + (getAvailableTopping() != null ? getAvailableTopping().hashCode() : 0);
         result = 31 * result + (getAvailableSize() != null ? getAvailableSize().hashCode() : 0);
@@ -120,6 +133,7 @@ public class Cake implements Serializable {
         return "Cake{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", price=" + price +
                 ", description='" + description + '\'' +
                 ", availableTopping=" + availableTopping +
                 ", availableSize=" + availableSize +

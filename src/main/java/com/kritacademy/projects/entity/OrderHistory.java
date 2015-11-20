@@ -12,7 +12,7 @@ public class OrderHistory extends Order {
     public OrderHistory() {
     }
 
-    public OrderHistory(Long id, String name, String phoneNumber, String allergic, String specialNeed, Date pickupDate, Cake cake, Double size, List<Topping> topping, OrderStatus status) {
-        super(id, name, phoneNumber, allergic, specialNeed, pickupDate, cake, size, topping, status);
+    public OrderHistory(String name, String phoneNumber, String allergic, String specialNeed, Date pickupDate, Cake cake, Double size, List<Topping> topping, OrderStatus status) {
+        super(name, phoneNumber, allergic, specialNeed, pickupDate, cake, size, topping, status);
     }
 }
