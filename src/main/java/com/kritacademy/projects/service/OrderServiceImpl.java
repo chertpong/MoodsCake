@@ -3,6 +3,9 @@ package com.kritacademy.projects.service;
 import com.kritacademy.projects.entity.Cake;
 import com.kritacademy.projects.entity.Order;
 import com.kritacademy.projects.entity.OrderStatus;
+import com.kritacademy.projects.exception.CakeNotFound;
+import com.kritacademy.projects.exception.DateIsInvalidException;
+import com.kritacademy.projects.exception.OrderStatusNotFound;
 import com.kritacademy.projects.repository.CakeRepository;
 import com.kritacademy.projects.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,12 +52,22 @@ public class OrderServiceImpl implements OrderService {
                 OrderStatus.Canceled
         );
         LocalDateTime now = LocalDateTime.now(ZoneId.of("Asia/Bangkok"));
-        Cake cake = cakeRepository.findOne(cakeId);
-        order.setCake(cake);
-        order.setStatus(orderStatusList.get(statusId));
-        if(now.isAfter(LocalDateTime.ofInstant(order.getPickupDate().toInstant(), ZoneId.of("Asia/Bangkok")))){
-            throw new RuntimeException("Date of pickup must not be in past");
+        try {
+            if(now.isAfter(LocalDateTime.ofInstant(order.getPickupDate().toInstant(), ZoneId.of("Asia/Bangkok")))){
+                throw new DateIsInvalidException("Date of pickup must not be in past");
+            }
+
+            Cake cake = cakeRepository.findOne(cakeId);
+
+            if(cake == null){throw new CakeNotFound("Cake is not found");}
+
+            order.setCake(cake);
+            order.setStatus(orderStatusList.get(statusId));
         }
+        catch (ArrayIndexOutOfBoundsException e){
+            throw new OrderStatusNotFound("Order status not found");
+        }
+
 
         return orderRepository.save(order);
     }

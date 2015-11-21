@@ -6,7 +6,9 @@ import com.kritacademy.projects.entity.OrderStatus;
 import com.kritacademy.projects.service.CakeService;
 import com.kritacademy.projects.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
@@ -31,7 +33,7 @@ public class OrderController {
         return orderService.getById(id);
     }
     @RequestMapping(value = "/orders/cake/{cid}/status/{sid}", method = RequestMethod.POST)
-    public Order addOrder(@RequestBody Order order, @PathVariable("cid") Long cid, @PathVariable("sid") int sid){
+    public Order addOrder(@Validated @RequestBody Order order, @PathVariable("cid") Long cid, @PathVariable("sid") int sid){
         return orderService.addOrder(order,cid,sid);
     }
     @RequestMapping(value = "/orders/", method = RequestMethod.PUT)
