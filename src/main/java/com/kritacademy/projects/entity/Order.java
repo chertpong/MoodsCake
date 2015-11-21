@@ -22,14 +22,16 @@ public class Order implements Serializable {
     @Size(min = 2,max = 100,message = "errors.name.size")
     String name;
     @NotNull(message = "errors.phone.notnull")
-    @Size(min = 8,max = 12,message = "error.phone.size")
+    @Size(min = 8,max = 12,message = "errors.phone.size")
     String phoneNumber;
     String allergic;
     String specialNeed;
+    @NotNull(message = "errors.date.notnull")
     @Temporal(TemporalType.TIMESTAMP)
     Date pickupDate;
     @ManyToOne
     Cake cake;
+    @NotNull(message = "errors.size.notnull")
     Double size;
     @ElementCollection
     @Enumerated(EnumType.STRING)

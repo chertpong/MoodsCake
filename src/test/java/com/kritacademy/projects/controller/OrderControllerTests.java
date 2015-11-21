@@ -37,35 +37,35 @@ public class OrderControllerTests {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
     }
 
-    @Test
-    public void testAddOrder() throws Exception {
-        this.mockMvc.perform(post("/orders")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("")
-                .accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
-                .andExpect(status().isOk());
-//        {
-//            name:"Krit",
-//                    phoneNumber:"0877772222",
-//                allergic:"No",
-//                specialNeed:"HBD",
-//                pickupDate:"2015-12-1",
-//                cake:{
+//    @Test
+//    public void testAddOrder() throws Exception {
+//        this.mockMvc.perform(post("/orders")
+//                .contentType(MediaType.APPLICATION_JSON)
+//                .content("")
+//                .accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
+//                .andExpect(status().isOk());
+////        {
+////            name:"Krit",
+////                    phoneNumber:"0877772222",
+////                allergic:"No",
+////                specialNeed:"HBD",
+////                pickupDate:"2015-12-1",
+////                cake:{
+////
+////        },
+////            size:1.0,
+////                    topping:[
+////            "Strawberries"
+////            ]
+////        }
+//    }
 //
-//        },
-//            size:1.0,
-//                    topping:[
-//            "Strawberries"
-//            ]
-//        }
-    }
-
-    @Test
-    public void testGetAllOrder() throws Exception {
-        this.mockMvc.perform(get("/orders").accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType("application/json;charset=UTF-8"))
-                .andExpect(jsonPath("$[0].id").value(1));
-
-    }
+//    @Test
+//    public void testGetAllOrder() throws Exception {
+//        this.mockMvc.perform(get("/orders").accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
+//                .andExpect(status().isOk())
+//                .andExpect(content().contentType("application/json;charset=UTF-8"))
+//                .andExpect(jsonPath("$[0].id").value(1));
+//
+//    }
 }
