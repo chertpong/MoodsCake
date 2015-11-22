@@ -45,4 +45,9 @@ public class OrderController {
     public boolean deleteOrder(@PathVariable("id") Long id){
         return orderService.deleteOrder(id);
     }
+
+    @RequestMapping(value = "/orders/reset", method = RequestMethod.GET)
+    public void reset(){
+        orderService.reset();
+    }
 }

@@ -13,4 +13,5 @@ public interface OrderService {
     public Order addOrder(Order order,Long cakeId, int statusId);
     public Order updateOrder(Order order,Long cakeId, int statusId);
     public boolean deleteOrder(Long id);
+    public void reset();
 }

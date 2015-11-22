@@ -64,6 +64,12 @@ public class OrderServiceImpl implements OrderService {
         return true;
     }
 
+    @Transactional
+    @Override
+    public void reset() {
+        orderRepository.deleteAll();
+    }
+
     private Order validateOrder(Order order,Long cakeId, int statusId){
         List<OrderStatus> orderStatusList = Arrays.asList(
                 OrderStatus.Pending,
