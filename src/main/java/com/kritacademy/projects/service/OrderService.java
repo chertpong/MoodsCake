@@ -11,6 +11,6 @@ public interface OrderService {
     public List<Order> getAll();
     public Order getById(Long id);
     public Order addOrder(Order order,Long cakeId, int statusId);
-    public Order updateOrder(Order order);
+    public Order updateOrder(Order order,Long cakeId, int statusId);
     public boolean deleteOrder(Long id);
 }

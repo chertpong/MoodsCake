@@ -36,10 +36,10 @@ public class OrderController {
     public Order addOrder(@Validated @RequestBody Order order, @PathVariable("cid") Long cid, @PathVariable("sid") int sid){
         return orderService.addOrder(order,cid,sid);
     }
-    @RequestMapping(value = "/orders/", method = RequestMethod.PUT)
-    public Order updateOrder(@RequestBody Order order){
+    @RequestMapping(value = "/orders/cake/{cid}/status/{sid}", method = RequestMethod.PUT)
+    public Order updateOrder(@RequestBody Order order, @PathVariable("cid") Long cid, @PathVariable("sid") int sid){
 
-        return orderService.updateOrder(order);
+        return orderService.updateOrder(order,cid,sid);
     }
     @RequestMapping(value = "/orders/{id}", method = RequestMethod.DELETE)
     public boolean deleteOrder(@PathVariable("id") Long id){

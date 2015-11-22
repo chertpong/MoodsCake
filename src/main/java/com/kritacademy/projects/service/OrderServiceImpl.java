@@ -5,6 +5,7 @@ import com.kritacademy.projects.entity.Order;
 import com.kritacademy.projects.entity.OrderStatus;
 import com.kritacademy.projects.exception.CakeNotFound;
 import com.kritacademy.projects.exception.DateIsInvalidException;
+import com.kritacademy.projects.exception.OrderNotFoundException;
 import com.kritacademy.projects.exception.OrderStatusNotFound;
 import com.kritacademy.projects.repository.CakeRepository;
 import com.kritacademy.projects.repository.OrderRepository;
@@ -44,6 +45,26 @@ public class OrderServiceImpl implements OrderService {
     @Transactional
     @Override
     public Order addOrder(Order order,Long cakeId, int statusId) {
+        return orderRepository.save(validateOrder(order,cakeId,statusId));
+    }
+    @Transactional
+    @Override
+    public Order updateOrder(Order order, Long cakeId, int statusId) {
+        if(orderRepository.findOne(order.getId())== null){
+            throw new OrderNotFoundException("Order is not found, the id may be invalid");
+        }
+        return orderRepository.save(validateOrder(order,cakeId,statusId));
+    }
+
+    @Transactional
+    @Override
+    public boolean deleteOrder(Long id) {
+        Order order = getById(id);
+        orderRepository.delete(order);
+        return true;
+    }
+
+    private Order validateOrder(Order order,Long cakeId, int statusId){
         List<OrderStatus> orderStatusList = Arrays.asList(
                 OrderStatus.Pending,
                 OrderStatus.Accepted,
@@ -67,22 +88,8 @@ public class OrderServiceImpl implements OrderService {
         catch (ArrayIndexOutOfBoundsException e){
             throw new OrderStatusNotFound("Order status not found");
         }
+        return order;
 
-
-        return orderRepository.save(order);
     }
 
-    @Transactional
-    @Override
-    public Order updateOrder(Order order) {
-        return orderRepository.save(order);
-    }
-
-    @Transactional
-    @Override
-    public boolean deleteOrder(Long id) {
-        Order order = getById(id);
-        orderRepository.delete(order);
-        return true;
-    }
 }
