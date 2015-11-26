@@ -3,21 +3,19 @@ package com.kritacademy.projects.service;
 import com.kritacademy.projects.entity.Cake;
 import com.kritacademy.projects.entity.Order;
 import com.kritacademy.projects.entity.OrderStatus;
-import com.kritacademy.projects.exception.CakeNotFound;
+import com.kritacademy.projects.exception.CakeNotFoundException;
 import com.kritacademy.projects.exception.DateIsInvalidException;
 import com.kritacademy.projects.exception.OrderNotFoundException;
-import com.kritacademy.projects.exception.OrderStatusNotFound;
+import com.kritacademy.projects.exception.OrderStatusNotFoundException;
 import com.kritacademy.projects.repository.CakeRepository;
 import com.kritacademy.projects.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -86,13 +84,13 @@ public class OrderServiceImpl implements OrderService {
 
             Cake cake = cakeRepository.findOne(cakeId);
 
-            if(cake == null){throw new CakeNotFound("Cake is not found");}
+            if(cake == null){throw new CakeNotFoundException("Cake is not found");}
 
             order.setCake(cake);
             order.setStatus(orderStatusList.get(statusId));
         }
         catch (ArrayIndexOutOfBoundsException e){
-            throw new OrderStatusNotFound("Order status not found");
+            throw new OrderStatusNotFoundException("Order status not found");
         }
         return order;
 
